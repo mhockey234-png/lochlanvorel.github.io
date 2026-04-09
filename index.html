@@ -1,159 +1,687 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lochlan Vorel</title>
-<style>
-    body {
-        margin: 0;
-        font-family: Arial, sans-serif;
-        background: #0f1a14;
-        color: #e6f2ea;
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sell Faster Listings</title>
+  <style>
+    :root{
+      --bg:#0d1117;
+      --panel:#161b22;
+      --panel-2:#1f2937;
+      --text:#e6edf3;
+      --muted:#9da7b3;
+      --accent:#3fb950;
+      --accent-dark:#2ea043;
+      --line:#2d333b;
+      --warn:#d29922;
     }
 
-    header {
-        background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.8)),
-                    url('https://images.unsplash.com/photo-1501785888041-af3ef285b470');
-        background-size: cover;
-        background-position: center;
-        padding: 80px 20px;
-        text-align: center;
+    *{
+      box-sizing:border-box;
+      margin:0;
+      padding:0;
     }
 
-    header h1 {
-        font-size: 3em;
-        margin: 0;
-        letter-spacing: 2px;
+    html{
+      scroll-behavior:smooth;
     }
 
-    header p {
-        opacity: 0.8;
-        margin-top: 10px;
+    body{
+      font-family: Arial, Helvetica, sans-serif;
+      background:
+        linear-gradient(rgba(8,12,10,.78), rgba(8,12,10,.92)),
+        url("https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1600&q=80") center/cover fixed;
+      color:var(--text);
+      line-height:1.55;
     }
 
-    section {
-        max-width: 900px;
-        margin: 40px auto;
-        padding: 0 20px;
+    a{
+      color:inherit;
+      text-decoration:none;
     }
 
-    h2 {
-        border-left: 4px solid #3fa34d;
-        padding-left: 10px;
-        margin-bottom: 15px;
+    .wrap{
+      max-width:1100px;
+      margin:0 auto;
+      padding:0 20px;
     }
 
-    .card {
-        background: #18251d;
-        padding: 15px;
-        margin: 10px 0;
-        border-radius: 8px;
-        transition: 0.2s;
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:50;
+      backdrop-filter: blur(10px);
+      background:rgba(10,14,12,.78);
+      border-bottom:1px solid rgba(255,255,255,.08);
     }
 
-    .card:hover {
-        transform: translateY(-3px);
-        background: #1f3025;
+    .nav{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:14px 0;
+      gap:16px;
     }
 
-    ul {
-        padding-left: 20px;
+    .brand{
+      font-weight:800;
+      letter-spacing:.5px;
+      font-size:1.05rem;
     }
 
-    footer {
-        text-align: center;
-        padding: 20px;
-        font-size: 0.9em;
-        opacity: 0.6;
+    .nav-links{
+      display:flex;
+      gap:18px;
+      flex-wrap:wrap;
+      font-size:.95rem;
+      color:var(--muted);
     }
-</style>
+
+    .nav-links a:hover{
+      color:var(--text);
+    }
+
+    .hero{
+      padding:88px 0 72px;
+    }
+
+    .hero-grid{
+      display:grid;
+      grid-template-columns:1.3fr .9fr;
+      gap:28px;
+      align-items:center;
+    }
+
+    .eyebrow{
+      display:inline-block;
+      background:rgba(63,185,80,.12);
+      color:#8ae29b;
+      border:1px solid rgba(63,185,80,.32);
+      border-radius:999px;
+      padding:8px 14px;
+      font-size:.85rem;
+      font-weight:700;
+      margin-bottom:18px;
+    }
+
+    h1{
+      font-size:clamp(2.3rem, 5vw, 4.4rem);
+      line-height:1.03;
+      margin-bottom:18px;
+      max-width:760px;
+    }
+
+    .hero p{
+      color:var(--muted);
+      font-size:1.08rem;
+      max-width:700px;
+      margin-bottom:24px;
+    }
+
+    .cta-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:14px;
+      margin-bottom:18px;
+    }
+
+    .btn{
+      display:inline-block;
+      padding:14px 20px;
+      border-radius:12px;
+      font-weight:800;
+      transition:.18s ease;
+      border:1px solid transparent;
+    }
+
+    .btn-primary{
+      background:var(--accent);
+      color:#08110a;
+    }
+
+    .btn-primary:hover{
+      background:var(--accent-dark);
+      transform:translateY(-1px);
+    }
+
+    .btn-secondary{
+      background:rgba(255,255,255,.04);
+      border-color:rgba(255,255,255,.1);
+      color:var(--text);
+    }
+
+    .btn-secondary:hover{
+      background:rgba(255,255,255,.08);
+    }
+
+    .hero-note{
+      font-size:.95rem;
+      color:#b6c0ca;
+    }
+
+    .card{
+      background:rgba(22,27,34,.92);
+      border:1px solid var(--line);
+      border-radius:18px;
+      box-shadow:0 10px 34px rgba(0,0,0,.22);
+    }
+
+    .hero-card{
+      padding:22px;
+    }
+
+    .hero-card h3{
+      margin-bottom:14px;
+      font-size:1.2rem;
+    }
+
+    .mini-list{
+      display:grid;
+      gap:12px;
+    }
+
+    .mini-item{
+      background:rgba(255,255,255,.03);
+      border:1px solid rgba(255,255,255,.06);
+      border-radius:14px;
+      padding:14px;
+    }
+
+    .mini-item strong{
+      display:block;
+      margin-bottom:6px;
+    }
+
+    section{
+      padding:26px 0 68px;
+    }
+
+    .section-head{
+      margin-bottom:26px;
+      max-width:760px;
+    }
+
+    .section-head h2{
+      font-size:2rem;
+      margin-bottom:12px;
+    }
+
+    .section-head p{
+      color:var(--muted);
+    }
+
+    .grid-3{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:18px;
+    }
+
+    .grid-2{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:18px;
+    }
+
+    .feature, .price, .step, .faq{
+      padding:22px;
+    }
+
+    .feature h3, .price h3, .step h3, .faq h3{
+      margin-bottom:10px;
+      font-size:1.14rem;
+    }
+
+    .feature p, .price p, .step p, .faq p{
+      color:var(--muted);
+    }
+
+    .checklist{
+      list-style:none;
+      display:grid;
+      gap:10px;
+      margin-top:14px;
+    }
+
+    .checklist li{
+      padding-left:20px;
+      position:relative;
+      color:#d9e2ea;
+    }
+
+    .checklist li::before{
+      content:"✓";
+      position:absolute;
+      left:0;
+      color:var(--accent);
+      font-weight:800;
+    }
+
+    .price{
+      position:relative;
+      overflow:hidden;
+    }
+
+    .badge{
+      position:absolute;
+      top:14px;
+      right:14px;
+      background:rgba(210,153,34,.14);
+      color:#ffd782;
+      border:1px solid rgba(210,153,34,.3);
+      padding:6px 10px;
+      border-radius:999px;
+      font-size:.78rem;
+      font-weight:800;
+    }
+
+    .price-amt{
+      font-size:2.1rem;
+      font-weight:900;
+      margin:10px 0 2px;
+    }
+
+    .price small{
+      color:var(--muted);
+      display:block;
+      margin-bottom:14px;
+    }
+
+    .before-after{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:18px;
+    }
+
+    .example-box{
+      padding:22px;
+    }
+
+    .label{
+      display:inline-block;
+      font-size:.78rem;
+      font-weight:800;
+      letter-spacing:.5px;
+      text-transform:uppercase;
+      border-radius:999px;
+      padding:6px 10px;
+      margin-bottom:14px;
+    }
+
+    .bad{
+      background:rgba(248,81,73,.12);
+      color:#ff9c96;
+      border:1px solid rgba(248,81,73,.28);
+    }
+
+    .good{
+      background:rgba(63,185,80,.12);
+      color:#8ae29b;
+      border:1px solid rgba(63,185,80,.28);
+    }
+
+    .example-title{
+      font-weight:800;
+      margin-bottom:10px;
+      font-size:1.12rem;
+    }
+
+    .example-copy{
+      color:var(--muted);
+      white-space:pre-line;
+    }
+
+    .cta{
+      padding:28px;
+      text-align:center;
+    }
+
+    .cta h2{
+      font-size:2rem;
+      margin-bottom:12px;
+    }
+
+    .cta p{
+      color:var(--muted);
+      max-width:720px;
+      margin:0 auto 18px;
+    }
+
+    .contact-box{
+      margin-top:16px;
+      display:inline-block;
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.1);
+      border-radius:14px;
+      padding:14px 18px;
+      color:#dbe4ec;
+      font-weight:700;
+    }
+
+    footer{
+      padding:28px 0 40px;
+      color:var(--muted);
+      font-size:.92rem;
+      text-align:center;
+    }
+
+    @media (max-width: 900px){
+      .hero-grid,
+      .grid-3,
+      .grid-2,
+      .before-after{
+        grid-template-columns:1fr;
+      }
+
+      .hero{
+        padding-top:62px;
+      }
+
+      .nav{
+        align-items:flex-start;
+        flex-direction:column;
+      }
+    }
+  </style>
 </head>
-
 <body>
+  <div class="topbar">
+    <div class="wrap nav">
+      <div class="brand">Sell Faster Listings</div>
+      <div class="nav-links">
+        <a href="#how">How It Works</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#example">Example</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </div>
+  </div>
 
-<header>
-    <h1>Lochlan Vorel</h1>
-    <p>Builder • Outdoors • Projects • Always Working Toward More</p>
-</header>
-
-<section>
-    <h2>About Me</h2>
-    <div class="card">
+  <header class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <div class="eyebrow">Marketplace Listing Rewrite Service</div>
+        <h1>Sell Your Stuff Faster With Better Listings</h1>
         <p>
-            I'm someone who likes to build, fix, and figure things out. Whether it's working on engines, 
-            tools, or outdoor projects, I’d rather be doing something real than sitting around. 
-            I’m focused on making money, improving skills, and turning projects into opportunities.
+          I rewrite weak Marketplace listings so they get more attention and make buyers take them seriously.
+          Better title, better description, better pricing angle, better chance of selling.
         </p>
+        <div class="cta-row">
+          <a href="#contact" class="btn btn-primary">Get My Listing Rewritten</a>
+          <a href="#pricing" class="btn btn-secondary">See Pricing</a>
+        </div>
+        <div class="hero-note">
+          Good for tools, bikes, parts, electronics, small equipment, outdoor gear, and more.
+        </div>
+      </div>
+
+      <div class="card hero-card">
+        <h3>What You Get</h3>
+        <div class="mini-list">
+          <div class="mini-item">
+            <strong>Stronger Title</strong>
+            A title that actually gets clicked instead of ignored.
+          </div>
+          <div class="mini-item">
+            <strong>Better Description</strong>
+            Clear, sharp wording that answers buyer questions fast.
+          </div>
+          <div class="mini-item">
+            <strong>Pricing Advice</strong>
+            A smarter asking-price angle so you stop guessing.
+          </div>
+          <div class="mini-item">
+            <strong>Photo Suggestions</strong>
+            Quick advice on what pictures to take so the item looks worth buying.
+          </div>
+        </div>
+      </div>
     </div>
-</section>
+  </header>
 
-<section>
-    <h2>What I Like Doing</h2>
-    <div class="card">
-        <ul>
-            <li>Riding dirt bikes and being outdoors</li>
-            <li>Working on boats, engines, and mechanical projects</li>
-            <li>Flipping things for profit and finding deals</li>
-            <li>Building and upgrading stuff hands-on</li>
-            <li>Hockey and pushing through tough physical limits</li>
-        </ul>
+  <section id="how">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>How It Works</h2>
+        <p>
+          Keep this dead simple. You send me your item info. I send back a listing that sounds better, looks more legit, and gives the buyer fewer reasons to keep scrolling.
+        </p>
+      </div>
+
+      <div class="grid-3">
+        <div class="card step">
+          <h3>1. Send Your Listing</h3>
+          <p>
+            Send your current title, description, asking price, and a couple photos if you want feedback on them.
+          </p>
+        </div>
+
+        <div class="card step">
+          <h3>2. I Rewrite It</h3>
+          <p>
+            I improve the wording, tighten the selling points, and make it easier for buyers to trust what they’re seeing.
+          </p>
+        </div>
+
+        <div class="card step">
+          <h3>3. You Post It</h3>
+          <p>
+            You copy and paste the upgraded version into Marketplace, Craigslist, OfferUp, or wherever you’re listing.
+          </p>
+        </div>
+      </div>
     </div>
-</section>
+  </section>
 
-<section>
-    <h2>Projects</h2>
-    <div class="card">
-        <ul>
-            <li>Restoring and upgrading a Bass Tracker boat</li>
-            <li>Building and modifying a go-kart/buggy</li>
-            <li>Fixing and flipping small engines and tools</li>
-            <li>Custom setups for tools and workspace efficiency</li>
-        </ul>
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Why Listings Don’t Sell</h2>
+        <p>
+          Most sellers are losing money because their listing is lazy, vague, or looks sketchy. Buyers move on fast.
+        </p>
+      </div>
+
+      <div class="grid-3">
+        <div class="card feature">
+          <h3>Weak Titles</h3>
+          <p>
+            “Drill for sale” is garbage. Nobody stops for that.
+          </p>
+        </div>
+        <div class="card feature">
+          <h3>Bad Descriptions</h3>
+          <p>
+            If the listing is short, messy, or missing key info, buyers assume the seller is clueless or hiding something.
+          </p>
+        </div>
+        <div class="card feature">
+          <h3>Wrong Price Angle</h3>
+          <p>
+            Even a decent item gets ignored if the price feels random and unsupported.
+          </p>
+        </div>
+      </div>
     </div>
-</section>
+  </section>
 
-<section>
-    <h2>Tools & Gear</h2>
-    <div class="card">
-        <ul>
-            <li>Ryobi platform (general use and versatility)</li>
-            <li>Hercules tools (automotive and heavier work)</li>
-            <li>Bauer tools (budget beat-up tools)</li>
-            <li>Air tools and mechanical equipment</li>
-            <li>Power tools for cutting, grinding, and building</li>
-        </ul>
+  <section id="pricing">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Pricing</h2>
+        <p>
+          Start cheap. Get proof. Then raise prices later. Right now the goal is customers and results.
+        </p>
+      </div>
+
+      <div class="grid-3">
+        <div class="card price">
+          <h3>Basic</h3>
+          <div class="price-amt">$5</div>
+          <small>For one listing</small>
+          <p>Best for a quick title + description fix.</p>
+          <ul class="checklist">
+            <li>1 rewritten title</li>
+            <li>1 improved description</li>
+            <li>1 pricing suggestion</li>
+          </ul>
+        </div>
+
+        <div class="card price">
+          <div class="badge">Best Starter Offer</div>
+          <h3>Better Chance Package</h3>
+          <div class="price-amt">$10</div>
+          <small>For one stronger listing</small>
+          <p>Best if the item has been sitting and not getting attention.</p>
+          <ul class="checklist">
+            <li>Better title + description</li>
+            <li>Pricing angle and buyer hook</li>
+            <li>Photo suggestions</li>
+            <li>Fast copy-paste format</li>
+          </ul>
+        </div>
+
+        <div class="card price">
+          <h3>3 Listing Bundle</h3>
+          <div class="price-amt">$20</div>
+          <small>For multiple items</small>
+          <p>Good for sellers with tools, parts, equipment, or random inventory.</p>
+          <ul class="checklist">
+            <li>Up to 3 listings rewritten</li>
+            <li>Title, description, and pricing help</li>
+            <li>More value than paying one at a time</li>
+          </ul>
+        </div>
+      </div>
     </div>
-</section>
+  </section>
 
-<section>
-    <h2>Skills</h2>
-    <div class="card">
-        <ul>
-            <li>Mechanical repair and troubleshooting</li>
-            <li>Tool usage and fabrication</li>
-            <li>Project planning and execution</li>
-            <li>Buying, selling, and flipping for profit</li>
-            <li>Problem solving under pressure</li>
-        </ul>
+  <section id="example">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Example: Weak Listing vs Better Listing</h2>
+        <p>
+          Sellers don’t need magic. They need clearer wording and a better reason for someone to message them.
+        </p>
+      </div>
+
+      <div class="before-after">
+        <div class="card example-box">
+          <div class="label bad">Before</div>
+          <div class="example-title">“Drill works good $60”</div>
+          <div class="example-copy">Used drill. Works good. Don’t use it much anymore. Message me if interested.</div>
+        </div>
+
+        <div class="card example-box">
+          <div class="label good">After</div>
+          <div class="example-title">Ryobi Cordless Drill Driver – Good Condition – Battery Tool for Home or Garage</div>
+          <div class="example-copy">Ryobi cordless drill in good working condition. Solid for home projects, quick repairs, or keeping in the garage. Runs as it should and has been a dependable tool. Great option if you want a decent drill without paying store price.
+
+Good fit for:
+• DIY projects
+• Basic repair work
+• Spare tool setup
+
+Priced to sell. Message if you want to pick it up.</div>
+        </div>
+      </div>
     </div>
-</section>
+  </section>
 
-<section>
-    <h2>Goals</h2>
-    <div class="card">
-        <ul>
-            <li>Build consistent income through projects and flipping</li>
-            <li>Save for bigger machines and upgrades</li>
-            <li>Keep leveling up skills in mechanical and hands-on work</li>
-            <li>Turn what I do into something bigger long-term</li>
-        </ul>
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <h2>What I Can Help Rewrite</h2>
+        <p>
+          Start where sellers already are. Go after categories that move often and don’t require huge trust upfront.
+        </p>
+      </div>
+
+      <div class="grid-2">
+        <div class="card feature">
+          <h3>Good Categories</h3>
+          <ul class="checklist">
+            <li>Power tools</li>
+            <li>Outdoor equipment</li>
+            <li>Bike parts and gear</li>
+            <li>Electronics</li>
+            <li>Auto parts</li>
+            <li>Small engines</li>
+          </ul>
+        </div>
+
+        <div class="card feature">
+          <h3>Bad Categories to Start With</h3>
+          <ul class="checklist">
+            <li>Luxury items with fake/scam risk</li>
+            <li>Anything where you know nothing about the product</li>
+            <li>Listings that already look excellent</li>
+            <li>People asking stupid high prices and refusing reality</li>
+          </ul>
+        </div>
+      </div>
     </div>
-</section>
+  </section>
 
-<footer>
-    Built by Lochlan Vorel
-</footer>
+  <section>
+    <div class="wrap">
+      <div class="card cta" id="contact">
+        <h2>Want Me To Rewrite Your Listing?</h2>
+        <p>
+          Send me your item title, your current description, your asking price, and a couple pictures if you want feedback. I’ll turn it into a cleaner listing you can post right away.
+        </p>
+        <a href="mailto:your@email.com?subject=Listing Rewrite Request" class="btn btn-primary">Email Me</a>
+        <div class="contact-box">
+          Replace this with your real contact:
+          <br><br>
+          Email: <strong>Lochlanvorel55@gmail.com</strong>
+          <br>
+          Instagram: <strong>@lochlanvorel</strong>
+        </div>
+      </div>
+    </div>
+  </section>
 
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <h2>FAQ</h2>
+      </div>
+
+      <div class="grid-2">
+        <div class="card faq">
+          <h3>Do you guarantee it will sell?</h3>
+          <p>
+            No. Nobody honest can guarantee that. But a stronger listing gives it a better chance than a lazy one.
+          </p>
+        </div>
+
+        <div class="card faq">
+          <h3>How fast do I get it back?</h3>
+          <p>
+            Start with a simple promise you can actually keep. Same day or within 24 hours is a good starting point.
+          </p>
+        </div>
+
+        <div class="card faq">
+          <h3>Do I need good pictures?</h3>
+          <p>
+            Better pictures help a lot. Even a great description can’t fully save terrible photos.
+          </p>
+        </div>
+
+        <div class="card faq">
+          <h3>Can you help with pricing too?</h3>
+          <p>
+            Yes. I can suggest a better pricing angle, but the market still decides what moves.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    Built to help sellers stop posting weak listings.
+  </footer>
 </body>
 </html>
