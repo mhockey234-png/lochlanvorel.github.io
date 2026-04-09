@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ITEMIZE | Listing to Cash</title>
+  <style>
+    :root{
+      --bg:#0f1113;
+      --bg2:#161a1f;
+      --panel:#1b2026;
+      --panel2:#222831;
+      --line:#313946;
+      --text:#f3f4f6;
+      --muted:#aeb6c2;
+      --accent:#f28a3c;
+      --accent2:#ff9c52;
+      --bad:#ff8d8d;
+      --good:#ffb37a;
+      --radius:22px;
+      --shadow:0 18px 40px rgba(0,0,0,.35);
+      --max:1120px;
+    }
+
+    *{
+      box-sizing:border-box;
+      margin:0;
+      padding:0;
+    }
+
+    body{
+      font-family:Arial, Helvetica, sans-serif;
+      background:
+        radial-gradient(circle at top right, rgba(242,138,60,.08), transparent 28%),
+        linear-gradient(180deg, var(--bg) 0%, var(--bg2) 100%);
+      color:var(--text);
+      line-height:1.5;
+    }
+
+    a{
+      text-decoration:none;
+      color:inherit;
+    }
+
+    .wrap{
+      max-width:var(--max);
+      margin:0 auto;
+      padding:0 18px;
+    }
+
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:100;
+      background:rgba(15,17,19,.92);
+      backdrop-filter:blur(10px);
+      border-bottom:1px solid rgba(255,255,255,.05);
+    }
+
+    .nav{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:16px;
+      padding:14px 0;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      font-weight:900;
+      letter-spacing:.08em;
+      font-size:1rem;
+    }
+
+    .brand img{
+      width:34px;
+      height:34px;
+      object-fit:cover;
+      border-radius:10px;
+      background:#fff;
+      box-shadow:0 6px 16px rgba(0,0,0,.2);
+    }
+
+    .nav-links{
+      display:flex;
+      gap:18px;
+      flex-wrap:wrap;
+    }
+
+    .nav-links a{
+      color:var(--muted);
+      font-weight:700;
+      font-size:.95rem;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active{
+      color:#fff;
+    }
+
+    .hero{
+      padding:28px 0 18px;
+    }
+
+    .hero-box{
+      background:
+        linear-gradient(135deg, rgba(255,255,255,.03), rgba(255,255,255,.01)),
+        linear-gradient(180deg, #181d22 0%, #14181d 100%);
+      border:1px solid rgba(255,255,255,.06);
+      border-radius:28px;
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      position:relative;
+    }
+
+    .hero-box::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:linear-gradient(90deg, transparent 0%, rgba(242,138,60,.06) 50%, transparent 100%);
+      pointer-events:none;
+    }
+
+    .hero-inner{
+      position:relative;
+      display:grid;
+      grid-template-columns:1.1fr .9fr;
+      gap:24px;
+      align-items:center;
+      padding:30px 24px;
+    }
+
+    .eyebrow{
+      display:inline-block;
+      margin-bottom:14px;
+      padding:7px 12px;
+      border-radius:999px;
+      background:rgba(242,138,60,.12);
+      border:1px solid rgba(242,138,60,.24);
+      color:#ffb37a;
+      font-size:.78rem;
+      font-weight:900;
+      text-transform:uppercase;
+      letter-spacing:.05em;
+    }
+
+    h1{
+      font-size:clamp(2.3rem, 6vw, 4.6rem);
+      line-height:1.02;
+      margin-bottom:12px;
+    }
+
+    .lead{
+      color:var(--muted);
+      font-size:1.08rem;
+      max-width:640px;
+      margin-bottom:18px;
+    }
+
+    .cta-row{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      margin-bottom:16px;
+    }
+
+    .btn{
+      display:inline-block;
+      padding:14px 18px;
+      border-radius:12px;
+      font-weight:900;
+      transition:.18s ease;
+      border:1px solid transparent;
+    }
+
+    .btn-primary{
+      background:var(--accent);
+      color:#111;
+    }
+
+    .btn-primary:hover{
+      background:var(--accent2);
+      transform:translateY(-1px);
+    }
+
+    .btn-secondary{
+      color:#fff;
+      border:1px solid rgba(255,255,255,.1);
+      background:rgba(255,255,255,.02);
+    }
+
+    .btn-secondary:hover{
+      background:rgba(255,255,255,.05);
+    }
+
+    .hero-note{
+      color:#c4ccd4;
+      font-size:.95rem;
+    }
+
+    .logo-panel{
+      background:rgba(255,255,255,.02);
+      border:1px solid rgba(255,255,255,.06);
+      border-radius:22px;
+      padding:18px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      gap:14px;
+      min-height:320px;
+    }
+
+    .logo-panel img{
+      width:100%;
+      max-width:290px;
+      border-radius:18px;
+      display:block;
+      box-shadow:0 10px 24px rgba(0,0,0,.25);
+    }
+
+    .logo-panel strong{
+      font-size:1.15rem;
+      letter-spacing:.1em;
+    }
+
+    .logo-panel span{
+      color:var(--accent2);
+      font-weight:800;
+      letter-spacing:.12em;
+      font-size:.84rem;
+    }
+
+    section{
+      padding:18px 0 48px;
+    }
+
+    .section-head{
+      margin-bottom:18px;
+    }
+
+    .section-head h2{
+      font-size:1.95rem;
+      margin-bottom:10px;
+    }
+
+    .section-head p{
+      color:var(--muted);
+      max-width:760px;
+    }
+
+    .grid-3{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:16px;
+    }
+
+    .grid-2{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:16px;
+    }
+
+    .card{
+      background:linear-gradient(180deg, var(--panel), var(--panel2));
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      padding:22px;
+      box-shadow:var(--shadow);
+    }
+
+    .card h3{
+      margin-bottom:10px;
+      font-size:1.08rem;
+    }
+
+    .card p{
+      color:var(--muted);
+    }
+
+    .example{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:16px;
+    }
+
+    .label{
+      display:inline-block;
+      margin-bottom:12px;
+      padding:6px 10px;
+      border-radius:999px;
+      font-size:.78rem;
+      font-weight:900;
+      text-transform:uppercase;
+      letter-spacing:.04em;
+    }
+
+    .bad{
+      background:rgba(255,91,91,.12);
+      border:1px solid rgba(255,91,91,.22);
+      color:var(--bad);
+    }
+
+    .good{
+      background:rgba(242,138,60,.12);
+      border:1px solid rgba(242,138,60,.24);
+      color:var(--good);
+    }
+
+    .example-title{
+      font-weight:900;
+      font-size:1.08rem;
+      margin-bottom:10px;
+    }
+
+    .example-text{
+      color:var(--muted);
+      white-space:pre-line;
+    }
+
+    ul{
+      padding-left:18px;
+      color:#e1e6eb;
+    }
+
+    li+li{
+      margin-top:8px;
+    }
+
+    .footer{
+      text-align:center;
+      color:var(--muted);
+      padding:30px 0 42px;
+      font-size:.92rem;
+    }
+
+    @media (max-width: 900px){
+      .hero-inner,
+      .grid-3,
+      .grid-2,
+      .example{
+        grid-template-columns:1fr;
+      }
+
+      .nav{
+        flex-direction:column;
+        align-items:flex-start;
+      }
+
+      .logo-panel{
+        min-height:auto;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="topbar">
+    <div class="wrap nav">
+      <div class="brand">
+        <img src="IMG_2636.jpeg" alt="ITEMIZE logo">
+        <span>ITEMIZE</span>
+      </div>
+
+      <div class="nav-links">
+        <a href="index.html" class="active">Home</a>
+        <a href="services.html">Services</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </div>
+  </div>
+
+  <header class="hero">
+    <div class="wrap">
+      <div class="hero-box">
+        <div class="hero-inner">
+          <div>
+            <div class="eyebrow">Marketplace Listing Optimization</div>
+            <h1>ITEMIZE</h1>
+            <p class="lead">
+              <strong style="color:#fff;">Listing to Cash.</strong><br>
+              I rewrite weak Marketplace listings so they hit harder, sound cleaner, and give buyers a better reason to message you.
+            </p>
+
+            <div class="cta-row">
+              <a href="services.html" class="btn btn-primary">See Services</a>
+              <a href="contact.html" class="btn btn-secondary">Send Listing</a>
+            </div>
+
+            <div class="hero-note">
+              Better titles. Better descriptions. Better odds of selling.
+            </div>
+          </div>
+
+          <div class="logo-panel">
+            <img src="IMG_2636.jpeg" alt="ITEMIZE logo">
+            <strong>ITEMIZE</strong>
+            <span>LISTING TO CASH</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <h2>What ITEMIZE Does</h2>
+        <p>
+          This service fixes weak Marketplace listings with better wording, stronger positioning, and a cleaner first impression.
+        </p>
+      </div>
+
+      <div class="grid-3">
+        <div class="card">
+          <h3>Better Titles</h3>
+          <p>Make people actually click your listing instead of scrolling past it.</p>
+        </div>
+
+        <div class="card">
+          <h3>Cleaner Descriptions</h3>
+          <p>Less confusion, more trust, and fewer dumb buyer questions.</p>
+        </div>
+
+        <div class="card">
+          <h3>Stronger Selling Angle</h3>
+          <p>Make the item feel worth messaging about, not just randomly posted.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Before vs Better</h2>
+        <p>
+          This is the whole point. Not fluff. Just a sharper listing with a better chance of getting attention.
+        </p>
+      </div>
+
+      <div class="example">
+        <div class="card">
+          <div class="label bad">Before</div>
+          <div class="example-title">“Ryobi drill works good $60”</div>
+          <div class="example-text">Used drill. Works good. Don’t use it anymore. Message me if interested.</div>
+        </div>
+
+        <div class="card">
+          <div class="label good">After</div>
+          <div class="example-title">Ryobi Cordless Drill Driver – Good Condition – Solid DIY / Garage Tool</div>
+          <div class="example-text">Ryobi cordless drill in good working condition. Good fit for home projects, basic repairs, or keeping as a dependable spare in the garage. Clean, simple, and ready to use without paying store price.
+
+Good for:
+• DIY jobs
+• Quick repair work
+• Backup tool setup
+
+Priced to move. Message if interested.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="grid-2">
+        <div class="card">
+          <h3>Best Fit For</h3>
+          <ul>
+            <li>Power tools</li>
+            <li>Parts and equipment</li>
+            <li>Electronics</li>
+            <li>Outdoor gear</li>
+            <li>Bikes and small engines</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h3>What You Send Me</h3>
+          <ul>
+            <li>Your current title</li>
+            <li>Your current description</li>
+            <li>Your asking price</li>
+            <li>Photos if you want image feedback too</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="footer">
+    ITEMIZE — Listing to Cash
+  </div>
+
+</body>
+</html>
